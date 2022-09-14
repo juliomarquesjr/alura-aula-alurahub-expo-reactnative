@@ -1,7 +1,3 @@
-<h1 align="center">
-    <img alt="FicandoOnline" title="#FicandoOnline" src=".images/header.jpg" width="100%" />
-</h1>
-
 <h4 align="center"> 
 	AluraHub 
 </h4>
