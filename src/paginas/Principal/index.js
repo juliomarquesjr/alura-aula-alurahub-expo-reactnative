@@ -8,13 +8,16 @@ import {
   Alert,
   ScrollView,
 } from "react-native";
-import estilos from "./estilos";
 
+import estilos from "./estilos";
+import useTextos from "../../hooks/useTextos";
 import { buscaUsuario } from "../../services/requisicoes/usuarios";
 
 const Principal = ({ navigation }) => {
   const [nomeUsuario, setNomeUsuario] = useState("");
   const [usuario, setUsuario] = useState({});
+
+  const textos = useTextos().principal;
 
   //Funcao assincrona para aguardar os dados chegarem da API
   async function busca() {
@@ -24,10 +27,7 @@ const Principal = ({ navigation }) => {
     if (resultado) {
       setUsuario(resultado);
     } else {
-      Alert.alert(
-        "Falha ao buscar usuario",
-        "Não foi possivel localizar o usuario informado, por favor, verifique o username e tente novamente"
-      );
+      Alert.alert(textos.tituloAlertError, textos.textoAlertError);
       setUsuario({});
     }
   }
@@ -53,13 +53,13 @@ const Principal = ({ navigation }) => {
                 <Text style={estilos.seguidoresNumero}>
                   {usuario.followers}
                 </Text>
-                <Text style={estilos.seguidoresTexto}>Seguidores</Text>
+                <Text style={estilos.seguidoresTexto}>{textos.seguidores}</Text>
               </View>
               <View style={estilos.seguidores}>
                 <Text style={estilos.seguidoresNumero}>
                   {usuario.following}
                 </Text>
-                <Text style={estilos.seguidoresTexto}>Seguindo</Text>
+                <Text style={estilos.seguidoresTexto}>{textos.seguindo}</Text>
               </View>
             </View>
             <TouchableOpacity
@@ -67,13 +67,13 @@ const Principal = ({ navigation }) => {
                 navigation.navigate("Repositorios", { id: usuario.id })
               }
             >
-              <Text style={estilos.repositorios}>Ver os repositórios</Text>
+              <Text style={estilos.repositorios}>{textos.repositorios}</Text>
             </TouchableOpacity>
           </>
         )}
 
         <TextInput
-          placeholder="Busque por um usuário"
+          placeholder={textos.placeholderInput}
           autoCapitalize="none"
           value={nomeUsuario}
           onChangeText={(texto) => setNomeUsuario(texto)}
@@ -81,7 +81,7 @@ const Principal = ({ navigation }) => {
         />
 
         <TouchableOpacity style={estilos.botao} onPress={() => busca()}>
-          <Text style={estilos.textoBotao}>Buscar</Text>
+          <Text style={estilos.textoBotao}>{textos.btnBuscar}</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
